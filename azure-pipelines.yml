@@ -43,9 +43,23 @@ jobs:
   steps:
   # To manually select a Xamarin SDK version on the Hosted macOS agent, enable this script with the SDK version you want to target
   # https://go.microsoft.com/fwlink/?linkid=871629
-  - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0 
-    displayName: 'Select Xamarin SDK version'
-    enabled: false
+  # - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0 
+  #   displayName: 'Select Xamarin SDK version'
+  #   enabled: false
+
+  - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
+    displayName: 'Select the Xamarin SDK version'
+    enabled: true
+
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        SYMLINK=6_6_0
+        MONOPREFIX=/Library/Frameworks/Mono.framework/Versions/$SYMLINK
+        echo "##vso[task.setvariable variable=DYLD_FALLBACK_LIBRARY_PATH;]$MONOPREFIX/lib:/lib:/usr/lib:$DYLD_LIBRARY_FALLBACK_PATH"
+        echo "##vso[task.setvariable variable=PKG_CONFIG_PATH;]$MONOPREFIX/lib/pkgconfig:$MONOPREFIX/share/pkgconfig:$PKG_CONFIG_PATH"
+        echo "##vso[task.setvariable variable=PATH;]$MONOPREFIX/bin:$PATH"
 
   - task: NuGetToolInstaller@0
 
