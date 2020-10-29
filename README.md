@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/jukullam/xamarin/_apis/build/status/juliakm.pipelines-xamarin?branchName=master)](https://dev.azure.com/jukullam/xamarin/_build/latest?definitionId=136&branchName=master)
 
 # Contributing
 
